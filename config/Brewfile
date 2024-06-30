@@ -1,0 +1,19 @@
+# General
+cask "firefox"
+cask "spotify"
+
+# Social Media
+cask "discord"
+cask "messenger"
+
+# Utilities
+brew "youtube-dl"
+brew "ffmpeg"
+brew "logi-options-plus"
+brew "bitwarden"
+
+# Development
+brew "pyenv"
+brew "terraform"
+cask "iterm2"
+cask "visual-studio-code"
