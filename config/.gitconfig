@@ -1,3 +1,12 @@
 [user]
 	name = adriancleung
 	email = adrian.leung@ualberta.ca
+[core]
+	editor = code
+	eol = lf
+	autocrlf = false
+	excludesfile = ~/.gitignore
+[pull]
+	rebase = false
+[credential]
+	helper = osxkeychain

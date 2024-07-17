@@ -1,3 +1,6 @@
+tap 'homebrew/bundle'
+tap 'homebrew/services'
+
 # General
 cask "firefox"
 cask "spotify"
@@ -9,10 +12,14 @@ cask "messenger"
 # Utilities
 brew "youtube-dl"
 brew "ffmpeg"
-brew "logi-options-plus"
-brew "bitwarden"
+cask "logi-options-plus"
+cask "bitwarden"
 
 # Development
+brew "git"
+brew "jenv"
+brew "java"
+brew "python"
 brew "pyenv"
 brew "terraform"
 cask "iterm2"

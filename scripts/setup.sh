@@ -58,28 +58,58 @@ cecho "Installing NVM..." $green
 
 # Install Homebrew packages
 cecho "Installing Homebrew packages..." $green
-brew bundle --no-lock --cleanup --file $SCRIPTPATH/../config/Brewfile
+brew bundle --no-lock --cleanup --file $SCRIPTPATH/../config/Brewfile || true
 
 # Install custom configs
 cecho "Installing custom configs..." $green
 cat $SCRIPTPATH/../config/.zshrc >> $HOME/.zshrc
-cat $SCRIPTPATH/../config/.gitconfig >> $HOME/.gitconfig
+cat $SCRIPTPATH/../config/.gitconfig > $HOME/.gitconfig
+cat $SCRIPTPATH/../config/.gitignore > $HOME/.gitignore
 
 # Set macOS defaults
 cecho "Setting macOS defaults..." $green
-defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true"
-defaults write NSGlobalDomain "ApplePressAndHoldEnabled" -bool "false"
-defaults write NSGlobalDomain "NSAutomaticSpellingCorrectionEnabled" -bool "false"
-defaults write NSGlobalDomain "WebAutomaticSpellingCorrectionEnabled" -bool "false"
-defaults write NSGlobalDomain "NSAutomaticCapitalizationEnabled" -bool "false"
-defaults write NSGlobalDomain "NSAutomaticPeriodSubstitutionEnabled" -bool "false"
-defaults write com.apple.HIToolbox "AppleFnUsageType" -int "2"
-defaults write com.apple.desktopservices "DSDontWriteNetworkStores" -bool "true"
-defaults write com.apple.dock "show-recents" -bool "false"
-defaults write com.apple.messageshelper.MessageController "SOInputLineSettings" -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool "false"
-defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int "40"
-defaults write com.apple.finder "NewWindowTarget" -string "PfHm"
-defaults write com.apple.finder "NewWindowTargetPath" -string "file://${HOME}/"
+# Save to disk (not to iCloud) by default
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+# Automatically quit printer app once the print jobs complete
+defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+# Finder: show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+# Disable the warning when changing a file extension
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+# Enable fast key press
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+# Disable auto-correct and capitalization
+defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+defaults write NSGlobalDomain WebAutomaticSpellingCorrectionEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+# Fn shows emojis
+defaults write com.apple.HIToolbox AppleFnUsageType -int 2
+# Avoid creating .DS_Store files on network or USB volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+# Don’t show recent applications in Dock
+defaults write com.apple.dock show-recents -bool false
+# Disable automatic emoji substitution (i.e. use plain text smileys)
+defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
+# Higher bluetooth audio quality
+defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+# Finder open in Home folder
+defaults write com.apple.finder NewWindowTarget -string "PfHm"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
+# Add iOS & Watch Simulator to Launchpad
+sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app" "/Applications/Simulator.app"
+sudo ln -sf "/Applications/Xcode.app/Contents/Developer/Applications/Simulator (Watch).app" "/Applications/Simulator (Watch).app"
+# Prevent Safari from opening ‘safe’ files automatically after downloading
+defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+# Enable Safari’s debug menu
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+# Enable the Develop menu and the Web Inspector in Safari
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+# Add a context menu item for showing the Web Inspector in web views
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 killall Finder
 killall Dock
 killall Messages
