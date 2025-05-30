@@ -46,3 +46,6 @@ eval "$(pyenv init -)"
 # jenv
 export PATH="$HOME/.jenv/bin:$PATH"
 eval "$(jenv init -)"
+
+# Poetry
+export PATH="$HOME/.local/bin:$PATH"

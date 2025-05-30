@@ -56,9 +56,15 @@ cp $SCRIPTPATH/../config/.p10k.zsh $HOME
 cecho "Installing NVM..." $green
 /bin/bash-c "$(curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)"
 
+# Install RVM
+curl -sSL https://get.rvm.io | bash -s stable
+
 # Install Homebrew packages
 cecho "Installing Homebrew packages..." $green
 brew bundle --no-lock --cleanup --file $SCRIPTPATH/../config/Brewfile || true
+
+# Install Poetry
+curl -sSL https://install.python-poetry.org | python3 -
 
 # Install custom configs
 cecho "Installing custom configs..." $green
